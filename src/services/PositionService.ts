@@ -30,10 +30,15 @@ export const removeSelectedPositionId = (id: string) => {
 
 export const selectedPositions$ = positions$.pipe(
   combineLatestWith(selectedPositionIdsSubject),
-  map(([positions, selectedPositionIds]) =>
-    positions.map((p: Position) => ({
-      ...p,
-      selected: selectedPositionIds.has(p.id),
-    }))
-  )
+  // map(([positions, selectedPositionIds]) =>
+  //   positions.map((p: Position) => ({
+  //     ...p,
+  //     selected: selectedPositionIds.has(p.id),
+  //   }))
+  // )
+  map(([positions, selectedPositionIds]: [Position[], Set<string>]) => {
+    return [...selectedPositionIds].map((id: string) => {
+      return positions.find((p: Position) => p.id === id);
+    });
+  })
 );

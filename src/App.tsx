@@ -47,7 +47,7 @@ const Positions = () => {
       </div>
       <div>
         {selectedPositions
-          .filter((p: Position) => p.selected)
+          /*.filter((p: Position) => p.selected)*/
           .map((p: Position) => {
             return (
               <div key={p.id} onClick={() => removeSelectedPositionId(p.id)}>
