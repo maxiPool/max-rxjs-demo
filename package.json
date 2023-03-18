@@ -9,9 +9,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "ag-grid-community": "^29.1.0",
+    "ag-grid-react": "^29.1.0",
     "observable-hooks": "^4.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.9.0",
     "rxjs": "^7.8.0"
   },
   "devDependencies": {

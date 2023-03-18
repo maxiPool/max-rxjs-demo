@@ -1,71 +1,28 @@
 import "./App.css";
-import { useObservableState } from "observable-hooks";
-import { clickConcatMap$, clickMergeMap$, clickSwitchMap$ } from "./rxjs/demo1";
-import {
-  addSelectedPositionId,
-  Position,
-  positions$,
-  removeSelectedPositionId,
-  selectedPositions$,
-} from "./services/PositionService";
+import React from "react";
+import { Route, Routes } from "react-router-dom";
+import routes, { MyRoute } from "./navigation/Routes";
+import Navbar from "./navigation/Navbar";
 
-const TWO_ROW_GRID = {
+export const TWO_ROW_GRID = {
   display: "grid",
   gridTemplateColumns: "1fr 1fr",
   maxWidth: 600,
   gap: "1rem",
 };
 
-const RxJS = () => {
-  const clickSwitchMap = useObservableState(clickSwitchMap$);
-  const clickMergeMap = useObservableState(clickMergeMap$);
-  const clickConcatMap = useObservableState(clickConcatMap$);
-
-  return (
-    <div>
-      <div>clickSwitchMap {clickSwitchMap}</div>
-      <div>clickMergeMap {clickMergeMap}</div>
-      <div>clickConcatMap {clickConcatMap}</div>
-    </div>
-  );
-};
-
-const Positions = () => {
-  const positions: Position[] = useObservableState(positions$, []);
-  const selectedPositions: Position[] = useObservableState(selectedPositions$, []);
-
-  return (
-    <div style={TWO_ROW_GRID}>
-      <div>
-        {positions.map((p: Position) => {
-          return (
-            <div key={p.id} onClick={() => addSelectedPositionId(p.id)}>
-              {p.id}
-            </div>
-          );
-        })}
-      </div>
-      <div>
-        {selectedPositions
-          /*.filter((p: Position) => p.selected)*/
-          .map((p: Position) => {
-            return (
-              <div key={p.id} onClick={() => removeSelectedPositionId(p.id)}>
-                {p.id}
-              </div>
-            );
-          })}
-      </div>
-    </div>
-  );
-};
-
 function App() {
   return (
-    <div>
-      <div>Hello rxJS</div>
-      <RxJS />
-      <Positions />
+    <div style={{ padding: "10px" }}>
+      <Navbar />
+      <main style={{ paddingTop: "8px" }}>
+        <Routes>
+          {/* Here we define the routes available to the app, for the Navbar, go to Navbar component! */}
+          {routes.map((r: MyRoute) => (
+            <Route key={r.path} path={r.path} element={r.component} />
+          ))}
+        </Routes>
+      </main>
     </div>
   );
 }
