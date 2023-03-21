@@ -7,6 +7,7 @@ import { refreshedPokemons$ } from "../../infra/catfacts/service/PokemonService"
 import { ColDef, ColumnApi, GridApi, GridReadyEvent } from "ag-grid-community";
 import { columnDefs$, initialColumnDefs } from "../ColumnDefs";
 import { useObservableStateSideEffect } from "../common/useObservableStateSideEffect";
+import { tap } from "rxjs";
 
 const defaultColDef: ColDef = { sortable: true, resizable: true };
 
@@ -22,15 +23,9 @@ const PokemonGrid = () => {
     }
   }, []);
 
-  // const rowData: Pokemon[] = useObservableState(refreshedPokemons$, []);
-  const sideEffect: () => void = useCallback(() => {
-    if (gridApiRef.current) {
-      gridApiRef.current?.sizeColumnsToFit();
-    }
-  }, []);
-
-  const pokemons = useObservableStateSideEffect(refreshedPokemons$, [], sideEffect);
-
+  const pokemons = useObservableState(
+    refreshedPokemons$.pipe(tap((_: Pokemon[]) => gridApiRef.current?.sizeColumnsToFit()))
+  );
   const columnDefs: ColDef[] = useObservableState(columnDefs$, initialColumnDefs);
 
   // Example of consuming Grid Event
