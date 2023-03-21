@@ -6,7 +6,6 @@ import { useObservableState } from "observable-hooks";
 import { refreshedPokemons$ } from "../../infra/catfacts/service/PokemonService";
 import { ColDef, ColumnApi, GridApi, GridReadyEvent } from "ag-grid-community";
 import { columnDefs$, initialColumnDefs } from "../ColumnDefs";
-import { useObservableStateSideEffect } from "../common/useObservableStateSideEffect";
 import { tap } from "rxjs";
 
 const defaultColDef: ColDef = { sortable: true, resizable: true };
